@@ -49,6 +49,8 @@ router.use(function(req, res, next) {
 
 var rota_pessoa = router.route('/pessoa');
 var rota_filme = router.route('/filme');
+var rota_genero = router.route('/genero');
+var rota_acao = router.route('/genero/Acao')
 
 //R do CRUD  | GET
 rota_pessoa.get(function(req,res,next){
@@ -162,6 +164,28 @@ rota_filme.post(function(req,res,next){
      });
 
 });
+
+rota_genero.get(function(req,res,next){
+
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query('SELECT nome_genero FROM Genero',function(err,rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.render('genero',{title:"RESTful Crud Example",data:rows});
+
+         });
+
+    });
+
+});
+
 
 var rota_pessoa2 = router.route('/pessoa/:id_pessoa');
 var rota_filme2 = router.route('/filme/:id_filme');
