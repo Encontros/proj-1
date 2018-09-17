@@ -50,7 +50,7 @@ router.use(function(req, res, next) {
 var rota_pessoa = router.route('/pessoa');
 var rota_filme = router.route('/filme');
 var rota_genero = router.route('/genero');
-var rota_acao = router.route('/genero/Acao')
+var rota_filmes_genero = router.route('/genero/:id_genero');
 
 //R do CRUD  | GET
 rota_pessoa.get(function(req,res,next){
@@ -125,7 +125,7 @@ rota_filme.get(function(req,res,next){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-            console.log(rows);
+            // console.log(rows);
 
             res.render('filme',{title:"RESTful Crud Example",data:rows});
 
@@ -152,16 +152,16 @@ rota_filme.post(function(req,res,next){
 
         var query = conn.query("INSERT INTO Filme (nome_filme, duracao, id_genero) VALUES (?,?,(SELECT id_genero FROM Genero WHERE nome_genero = ?))",[req.body.titulo,req.body.duracao, req.body.genero], function(err, rows){
 
-           if(err){
+            if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
-           }
+            }
 
-          res.sendStatus(200);
+            res.sendStatus(200);
 
         });
 
-     });
+    });
 
 });
 
@@ -171,7 +171,7 @@ rota_genero.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT nome_genero FROM Genero',function(err,rows){
+        var query = conn.query('SELECT nome_genero, id_genero FROM Genero',function(err,rows){
 
             if(err){
                 console.log(err);
@@ -186,6 +186,26 @@ rota_genero.get(function(req,res,next){
 
 });
 
+rota_filmes_genero.get(function(req,res,next){
+    var id_genero = req.params.id_genero;
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query('SELECT * FROM Filme, Genero WHERE Filme.id_genero = Genero.id_genero AND (Genero.id_genero  =  ?)',id_genero ,function(err,rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.render('filme_genero',{title:"RESTful Crud Example",data:rows});
+
+         });
+
+    });
+
+});
 
 var rota_pessoa2 = router.route('/pessoa/:id_pessoa');
 var rota_filme2 = router.route('/filme/:id_filme');

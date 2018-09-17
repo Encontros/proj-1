@@ -1,0 +1,46 @@
+<!-- extended javascript -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Filmes</title>
+        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
+        <link rel="stylesheet" href="/../css/style.css">
+    </head>
+<body>
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th>Título</th>
+            <th>Duração</th>
+            <th>Gênero</th>
+
+        </tr>
+                       
+        <% if(data.length){ 
+                        
+         for(var i = 0;i < data.length;i++) { 
+
+            if(data[i].validade_filme) {
+        %>
+         
+        <tr>
+            <td><%=data[i].nome_filme%></td>
+            <td><%=data[i].duracao%></td>
+            <td><%=data[i].nome_genero%></td>
+            
+        </tr>
+    <% }}
+    
+     }else{ %>
+         <tr>
+            <td colspan="5">No Data</td>
+         </tr>
+    <% } %>
+
+    </table>
+</div>
+<div class="page-data">
+     <ul class="err-area"></ul>
+</div>
+</body>
+</html>

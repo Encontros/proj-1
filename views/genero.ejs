@@ -8,9 +8,9 @@
     <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
         <link rel="stylesheet" href="/../css/style.css">
     
-        <script type="text/javascript"> 
+        <!-- <script type="text/javascript"> 
             function RemoveAccents(strAccents){
-                // funcao retirada de https://gist.github.com/alisterlf/3490957, com modificacao para tirar os espacos tambem
+                // funcao retirada de https://gist.github.com/alisterlf/3490957, para retirar acentos com modificacao para tirar os espacos tambem
                 var strAccents = strAccents.split('');
                 var strAccentsOut = new Array();
                 var strAccentsLen = strAccents.length;
@@ -26,7 +26,7 @@
                 mystr = "/api/genero/" + strAccentsOut; 
             return mystr;
             }
-        </script>
+        </script> -->
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">   
         <% if(data.length){ 
@@ -35,9 +35,11 @@
         %>
         
         <tr>
+
             <td><a href="" id="<%="mystr" + i%>"><%=data[i].nome_genero%></a></td>
             <script>
-                document.getElementById("<%="mystr" + i%>").href = RemoveAccents("<%=data[i].nome_genero%>");
+                document.getElementById("<%="mystr" + i%>").href = "<%=data[i].id_genero%>"
+                // document.getElementById("<%="mystr" + i%>").href = RemoveAccents("<%=data[i].nome_genero%>");
             </script>
         </tr>
         <% } %>
