@@ -51,7 +51,7 @@ var rota_pessoa = router.route('/pessoa');
 var rota_filme = router.route('/filme');
 var rota_genero = router.route('/genero');
 var rota_filmes_genero = router.route('/genero/:id_genero');
-
+var rota_encontro = router.route('/encontro')
 //R do CRUD  | GET
 rota_pessoa.get(function(req,res,next){
 
@@ -69,7 +69,7 @@ rota_pessoa.get(function(req,res,next){
 
             res.render('user',{title:"RESTful Crud Example",data:rows});
 
-         });
+        });
 
     });
 
@@ -90,7 +90,7 @@ rota_pessoa.post(function(req,res,next){
         nome:req.body.nome,
         telefone:req.body.telefone,
         endereco:req.body.endereco,
-     };
+    };
 
     //insere no mysql
     req.getConnection(function (err, conn){
@@ -99,16 +99,16 @@ rota_pessoa.post(function(req,res,next){
 
         var query = conn.query("INSERT INTO Pessoa set ? ",data, function(err, rows){
 
-           if(err){
+            if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
-           }
+            }
 
-          res.sendStatus(200);
+            res.sendStatus(200);
 
         });
 
-     });
+    });
 
 });
 
@@ -129,12 +129,33 @@ rota_filme.get(function(req,res,next){
 
             res.render('filme',{title:"RESTful Crud Example",data:rows});
 
-         });
+        });
 
     });
 
 });
 
+rota_encontro.get(function(req,res,next){
+
+
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query('SELECT * FROM Encontro, Filme, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Filme.id_filme = Encontro.id_filme AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND Pessoa.id_pessoa = Encontro.id_anfitriao;',function(err,rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.render('encontro',{title:"RESTful Crud Example",data:rows});
+
+        });
+
+    });
+
+});
 
 //C do CRUD | POST
 rota_filme.post(function(req,res,next){
@@ -180,7 +201,7 @@ rota_genero.get(function(req,res,next){
 
             res.render('genero',{title:"RESTful Crud Example",data:rows});
 
-         });
+        });
 
     });
 
@@ -201,7 +222,7 @@ rota_filmes_genero.get(function(req,res,next){
 
             res.render('filme_genero',{title:"RESTful Crud Example",data:rows});
 
-         });
+        x});
 
     });
 
@@ -284,46 +305,46 @@ rota_pessoa2.delete(function(req,res,next){
 
     var id_pessoa = req.params.id_pessoa;
 
-     req.getConnection(function (err, conn) {
+    req.getConnection(function (err, conn) {
 
         if (err) return next("Cannot Connect");
 
         var query = conn.query("DELETE FROM Pessoa WHERE id_pessoa = ? ",[id_pessoa], function(err, rows){
 
-             if(err){
+            if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
-             }
+            }
 
-             res.sendStatus(200);
+            res.sendStatus(200);
 
         });
         //console.log(query.sql);
 
-     });
+    });
 });
 
 rota_filme2.put(function(req,res,next){
 
     var id_filme = req.params.id_filme;
 
-     req.getConnection(function (err, conn) {
+    req.getConnection(function (err, conn) {
 
         if (err) return next("Cannot Connect");
 
         var query = conn.query("UPDATE Filme SET validade_filme = 0 WHERE id_filme = ? ",[id_filme], function(err, rows){
 
-             if(err){
+            if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
-             }
+            }
 
-             res.sendStatus(200);
+            res.sendStatus(200);
 
         });
         //console.log(query.sql);
 
-     });
+    });
 });
 
 
@@ -333,6 +354,6 @@ app.use('/api', router);
 //start Server
 var server = app.listen(3000,function(){
 
-   console.log("Listening to port %s",server.address().port);
+    console.log("Listening to port %s",server.address().port);
 
 });

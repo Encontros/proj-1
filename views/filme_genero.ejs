@@ -15,14 +15,14 @@
             <th>Gênero</th>
 
         </tr>
-                       
+
         <% if(data.length){ 
                         
-         for(var i = 0;i < data.length;i++) { 
+        for(var i = 0;i < data.length;i++) { 
 
             if(data[i].validade_filme) {
         %>
-         
+        
         <tr>
             <td><%=data[i].nome_filme%></td>
             <td><%=data[i].duracao%></td>
@@ -31,16 +31,16 @@
         </tr>
     <% }}
     
-     }else{ %>
-         <tr>
+    }else{ %>
+        <tr>
             <td colspan="5">No Data</td>
-         </tr>
+        </tr>
     <% } %>
 
     </table>
 </div>
 <div class="page-data">
-     <ul class="err-area"></ul>
+    <ul class="err-area"></ul>
 </div>
 </body>
 </html>
