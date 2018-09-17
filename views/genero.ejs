@@ -2,56 +2,51 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nosso primeiro CRUD em Node</title>
+        <title>Gêneros</title>
     </head>
 <body>
     <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
         <link rel="stylesheet" href="/../css/style.css">
     
-     <script type="text/javascript">
-        function RemoveAccents(strAccents){
-            var strAccents = strAccents.split('');
-            var strAccentsOut = new Array();
-            var strAccentsLen = strAccents.length;
-            var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-            var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
-            for (var y = 0; y < strAccentsLen; y++) {
-                if (accents.indexOf(strAccents[y]) != -1) {
-                    strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
-                } else
-                    strAccentsOut[y] = strAccents[y];
+        <script type="text/javascript"> 
+            function RemoveAccents(strAccents){
+                // funcao retirada de https://gist.github.com/alisterlf/3490957, com modificacao para tirar os espacos tambem
+                var strAccents = strAccents.split('');
+                var strAccentsOut = new Array();
+                var strAccentsLen = strAccents.length;
+                var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž" ';
+                var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+                for (var y = 0; y < strAccentsLen; y++) {
+                    if (accents.indexOf(strAccents[y]) != -1) {
+                        strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+                    } else
+                        strAccentsOut[y] = strAccents[y];
+                }
+                strAccentsOut = strAccentsOut.join('');
+                mystr = "/api/genero/" + strAccentsOut; 
+            return mystr;
             }
-            strAccentsOut = strAccentsOut.join('');
-            mystr = "/api/genero/" + strAccentsOut; 
-        return mystr;
-    }
-    </script> 
+        </script>
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">   
         <% if(data.length){ 
 
-         for(var i = 0;i < data.length;i++) { 
-         %>
-         
+        for(var i = 0;i < data.length;i++) { 
+        %>
+        
         <tr>
-            <td><a href="" id= "mystr"><%=data[i].nome_genero%></a></td>
-              <script>
-                if(data.length){ 
-
-                    for(var i = 0;i < data.length;i++) { 
-                
-                        document.getElementById("mystr").href = RemoveAccents(<%- JSON.stringify(data[i].nome_genero) %>);
-                }
+            <td><a href="" id="<%="mystr" + i%>"><%=data[i].nome_genero%></a></td>
+            <script>
+                document.getElementById("<%="mystr" + i%>").href = RemoveAccents("<%=data[i].nome_genero%>");
             </script>
         </tr>
-    <% }
+        <% } %>
     
-     }else{ %>
-         <tr>
+    <%} else{ %>
+        <tr>
             <td colspan="5">No Data</td>
-         </tr>
+        </tr>
     <% } %>
-                                      
     </table>
 </div>
 </body>
