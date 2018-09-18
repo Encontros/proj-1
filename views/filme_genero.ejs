@@ -7,40 +7,49 @@
         <link rel="stylesheet" href="/../css/style.css">
     </head>
 <body>
-<div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
-        <tr>
-            <th>Título</th>
-            <th>Duração (min)</th>
-            <th>Gênero</th>
-
-        </tr>
-
-        <% if(data.length){ 
-                        
-        for(var i = 0;i < data.length;i++) { 
-
-            if(data[i].validade_filme) {
-        %>
+            <tr>
+                <th><a href="/api/pessoa">Pessoas</a></th>
+                <th><a href="/api/filme">Filmes</a></th>
+                <th><a href="/api/genero">Gêneros</a></th>
+                <th><a href="/api/encontro">Encontros</a></th>
         
-        <tr>
-            <td><%=data[i].nome_filme%></td>
-            <td><%=data[i].duracao%></td>
-            <td><%=data[i].nome_genero%></td>
-            
-        </tr>
-    <% }}
-    
-    }else{ %>
-        <tr>
-            <td colspan="5">No Data</td>
-        </tr>
-    <% } %>
+            </tr>
+    </table>  
+    <div class="data-table">
+        <table border="1" cellpadding="7" cellspacing="7">
+            <tr>
+                <th>Título</th>
+                <th>Duração (min)</th>
+                <th>Gênero</th>
 
-    </table>
-</div>
-<div class="page-data">
-    <ul class="err-area"></ul>
-</div>
+            </tr>
+
+            <% if(data.length){ 
+                            
+                for(var i = 0;i < data.length;i++) { 
+
+                    if(data[i].validade_filme) {
+                %>
+                
+                <tr>
+                    <td><%=data[i].nome_filme%></td>
+                    <td><%=data[i].duracao%></td>
+                    <td><%=data[i].nome_genero%></td>
+                    
+                </tr>
+                <% }}
+        
+            }else{ %>
+                <tr>
+                    <td colspan="5">Nenhum filme adicionado com esse gênero.</td>
+                </tr>
+            <% } %>
+
+        </table>
+    </div>
+    <div class="page-data">
+        <ul class="err-area"></ul>
+    </div>
 </body>
 </html>

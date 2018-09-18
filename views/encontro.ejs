@@ -7,132 +7,141 @@
         <link rel="stylesheet" href="/../css/style.css">
     </head>
 <body>
-<div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
-        <tr>
-            <th>Data</th>
-            <th>Anfitrião</th>
-            <th>Filme</th>
-            <th>Endereço</th>
-            <th>Participantes</th>
-            <th>Deletar</th>
-
-        </tr>
-
-        <% if(data[0].length){ 
-                        
-        for(var i = 0;i < data[0].length;i++) { 
-
-            if(data[0][i].validade_encontro) {
-        %>
-        <tr>
-            <td><%=data[0][i].data_encontro%></td>
-            <td><%=data[0][i].nome%></td>
-            <td><%=data[0][i].nome_filme%></td>
-            <td><%=data[0][i].endereco%></td>
-            <td><a href="" id="<%="mystr" + i%>">Ver</a></td>
-            <script>
-                document.getElementById("<%="mystr" + i%>").href = "encontro/<%=data[0][i].id_encontro%>"
-            </script>
-            <td>
-                <a class="a-inside delete" href="javascript:void(0)" onClick="deleteEncontro(<%=data[0][i].id_encontro%>)">Delete</a>
-            </td>
-        </tr>
-    <% }}
-    
-    }else{ %>
-        <tr>
-            <td colspan="5">No Data</td>
-        </tr>
-    <% } %>
-
-    </table>
-</div>
-<div class="page-data">
-    
-    <form method="post" action="" id="the-form">
-        <table cellpadding="11">
-        <tr>
-            <td class="label">Data</td><td>: <input type="datetime-local" name="data_encontro"></td>
-        </tr>
-        <tr>
-            <td class="label">Anfitrião</td><td>: 
-                <select id="select1" name="anfitriao">
-                    <% for(var i=0; i < data[2].length; i++) { %>
-                        <option><%= data[2][i].nome%></option>
-                     <% } %>
-                </select></td>
-
-        </tr>
-        <tr>
-            <td class="label">Filme</td><td>: 
-                <select id="select2" name="filme">
-                    <% for(var i=0; i < data[1].length; i++) { %>
-                        <option><%= data[1][i].nome_filme %></option>
-                     <% } %>
-                </select></td>
-         </tr>
-         <tr>
-            <td class="label"></td>
-            <td>
-                &nbsp; <input type="button" value="Save" onClick="saveEncontro()">
-            </td>
-         </tr>
-        </table>
-    </form>
-</div> 
-<div class="page-data">
-     <ul class="err-area"></ul>
-</div>
-
-<script>
-
-    function saveEncontro(){
-       
-       $.ajax({
+            <tr>
+                <th><a href="/api/pessoa">Pessoas</a></th>
+                <th><a href="/api/filme">Filmes</a></th>
+                <th><a href="/api/genero">Gêneros</a></th>
+                <th><a href="/api/encontro">Encontros</a></th>
         
-        url:"/api/encontro",
-        type:"post",
-        data:$("#the-form").serialize(),
-        success:function(res){
-            
-            window.location.reload();
-            return false;
-        },
-        error:function(xhr, status, error){
-            
-            console.log(xhr.responseText);
-            var err = '';
-            $.each(JSON.parse(xhr.responseText) , function(i, item) {
-               
-                 err +='<li>'+item.msg+'</li>';
+            </tr>
+    </table>    
+    <div class="data-table">
+        <table border="1" cellpadding="7" cellspacing="7">
+            <tr>
+                <th>Data</th>
+                <th>Anfitrião</th>
+                <th>Filme</th>
+                <th>Endereço</th>
+                <th>Participantes</th>
+                <th>Deletar</th>
+
+            </tr>
+
+            <% if(data[0].length){ 
+                            
+            for(var i = 0;i < data[0].length;i++) { 
+
+                if(data[0][i].validade_encontro) {
+            %>
+            <tr>
+                <td><%=data[0][i].data_encontro%></td>
+                <td><%=data[0][i].nome%></td>
+                <td><%=data[0][i].nome_filme%></td>
+                <td><%=data[0][i].endereco%></td>
+                <td><a href="" id="<%="mystr" + i%>">Ver</a></td>
+                <script>
+                    document.getElementById("<%="mystr" + i%>").href = "encontro/<%=data[0][i].id_encontro%>"
+                </script>
+                <td>
+                    <a class="a-inside delete" href="javascript:void(0)" onClick="deleteEncontro(<%=data[0][i].id_encontro%>)">Delete</a>
+                </td>
+            </tr>
+        <% }}
+        
+        }else{ %>
+            <tr>
+                <td colspan="5">Nenhum encontro criado</td>
+            </tr>
+        <% } %>
+
+        </table>
+    </div>
+    <div class="page-data">
+        
+        <form method="post" action="" id="the-form">
+            <table cellpadding="11">
+            <tr>
+                <td class="label">Data</td><td>: <input type="datetime-local" name="data_encontro"></td>
+            </tr>
+            <tr>
+                <td class="label">Anfitrião</td><td>: 
+                    <select id="select1" name="anfitriao">
+                        <% for(var i=0; i < data[2].length; i++) { %>
+                            <option><%= data[2][i].nome%></option>
+                        <% } %>
+                    </select></td>
+
+            </tr>
+            <tr>
+                <td class="label">Filme</td><td>: 
+                    <select id="select2" name="filme">
+                        <% for(var i=0; i < data[1].length; i++) { %>
+                            <option><%= data[1][i].nome_filme %></option>
+                        <% } %>
+                    </select></td>
+            </tr>
+            <tr>
+                <td class="label"></td>
+                <td>
+                    &nbsp; <input type="button" value="Save" onClick="saveEncontro()">
+                </td>
+            </tr>
+            </table>
+        </form>
+    </div> 
+    <div class="page-data">
+        <ul class="err-area"></ul>
+    </div>
+
+    <script>
+
+        function saveEncontro(){
+        
+            $.ajax({
+                
+                url:"/api/encontro",
+                type:"post",
+                data:$("#the-form").serialize(),
+                success:function(res){
+                    
+                    window.location.reload();
+                    return false;
+                },
+                error:function(xhr, status, error){
+                    
+                    console.log(xhr.responseText);
+                    var err = '';
+                    $.each(JSON.parse(xhr.responseText) , function(i, item) {
+                    
+                        err +='<li>'+item.msg+'</li>';
+                    });
+                    $(".err-area").html(err);    
+                    return false;
+                }
+                
             });
-            $(".err-area").html(err);    
-            return false;
         }
         
-       });
-    }
-    
-    function deleteEncontro(id_encontro){
-    
-        $.ajax({
-            url:"/api/encontro/"+id_encontro,
-            type: 'put',
-            success: function(res) {
+        function deleteEncontro(id_encontro){
+        
+            $.ajax({
+                url:"/api/encontro/"+id_encontro,
+                type: 'put',
+                success: function(res) {
+                    
+                    window.location.reload();
+                    return false;
+                },
+                error:function(xhr, status, error){
                 
-                window.location.reload();
-                return false;
-            },
-            error:function(xhr, status, error){
-            
-                console.log(xhr.responseText);
-                alert("Error deleting");
-                return false;
-            }
-        });
-    }
+                    console.log(xhr.responseText);
+                    alert("Error deleting");
+                    return false;
+                }
+            });
+        }
 
-</script>
+    </script>
 </body>
 </html>

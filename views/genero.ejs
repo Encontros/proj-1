@@ -2,11 +2,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
+        <link rel="stylesheet" href="/../css/style.css">
         <title>Gêneros</title>
     </head>
     <body>
-        <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
-            <link rel="stylesheet" href="/../css/style.css">
+        <table border="1" cellpadding="7" cellspacing="7">
+                <tr>
+                    <th><a href="/api/pessoa">Pessoas</a></th>
+                    <th><a href="/api/filme">Filmes</a></th>
+                    <th><a href="/api/genero">Gêneros</a></th>
+                    <th><a href="/api/encontro">Encontros</a></th>
+            
+                </tr>
+        </table>  
+
         
                 <div class="data-table">
                     <table border="1" cellpadding="7" cellspacing="7">   
@@ -25,7 +35,7 @@
                     
                     <%} else{ %>
                         <tr>
-                            <td colspan="5">No Data</td>
+                            <td colspan="5">Nenhum Gênero.</td>
                         </tr>
                     <% } %>
                     </table>

@@ -8,32 +8,43 @@
     <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
         <link rel="stylesheet" href="/../css/style.css">
 
-<div class="data-table">
-    <table border="1" cellpadding="7" cellspacing="7">   
-        <h2>Filmes Assistidos <h2>
-        
+
+    <table border="1" cellpadding="7" cellspacing="7">
         <tr>
-            <th>Título</th>
+            <th><a href="/api/pessoa">Pessoas</a></th>
+            <th><a href="/api/filme">Filmes</a></th>
+            <th><a href="/api/genero">Gêneros</a></th>
+            <th><a href="/api/encontro">Encontros</a></th>
+
         </tr>
-            <% if(data[1].length){ 
-                        
-                for(var i = 0;i < data[1].length;i++) { %>
-                        
-                        <tr>
-                            <td><%=data[1][i].nome_filme%></td>
-                        </tr>  
-
-                    <% }
-    
-                    }else{ %>
-                        <tr>
-                            <td colspan="5">No Data</td>
-                        </tr>
-                    <% } %>
     </table>
-</div>
 
-<div class="page-data">
+    <div class="data-table">
+        <table border="1" cellpadding="7" cellspacing="7">   
+            <h2>Filmes Assistidos <h2>
+            
+            <tr>
+                <th>Título</th>
+            </tr>
+                <% if(data[1].length){ 
+                            
+                    for(var i = 0;i < data[1].length;i++) { %>
+                            
+                            <tr>
+                                <td><%=data[1][i].nome_filme%></td>
+                            </tr>  
+
+                        <% }
+        
+                        }else{ %>
+                            <tr>
+                                <td colspan="5">Nenhum filme assistido ainda :(</td>
+                            </tr>
+                        <% } %>
+        </table>
+    </div>
+
+    <div class="page-data">
     
         <form method="post" action="" id="the-form">
             <table cellpadding="11">
@@ -42,11 +53,11 @@
                     <select id="select1" name="filmes">
                         <% for(var i=0; i < data[0].length; i++) { %>
                             <option><%= data[0][i].nome_filme%></option>
-                         <% } %>
+                        <% } %>
                     </select></td>
     
             </tr>
-             <tr>
+            <tr>
                 <td class="label"></td>
                 <td>
                     <script>
@@ -59,7 +70,7 @@
                     </script>
                     &nbsp; <input type="button" value="Save" onClick="saveAssistido(getIDfromURL())">
                 </td>
-             </tr>
+            </tr>
             </table>
         </form>
     </div>  
@@ -67,30 +78,30 @@
     <script>
 
             function saveAssistido(id_pessoa){
-               
-               $.ajax({
-    
-                url:"/api/pessoa/"+id_pessoa,
-                type:"post",
-                data:$("#the-form").serialize(),
-                success:function(res){
-                    
-                    window.location.reload();
-                    return false;
-                },
-                error:function(xhr, status, error){
-                    
-                    console.log(xhr.responseText);
-                    var err = '';
-                    $.each(JSON.parse(xhr.responseText) , function(i, item) {
-                       
-                         err +='<li>'+item.msg+'</li>';
-                    });
-                    $(".err-area").html(err);    
-                    return false;
-                }
+
+                $.ajax({
+
+                    url:"/api/pessoa/"+id_pessoa,
+                    type:"post",
+                    data:$("#the-form").serialize(),
+                    success:function(res){
+                        
+                        window.location.reload();
+                        return false;
+                    },
+                    error:function(xhr, status, error){
+                        
+                        console.log(xhr.responseText);
+                        var err = '';
+                        $.each(JSON.parse(xhr.responseText) , function(i, item) {
+
+                            err +='<li>'+item.msg+'</li>';
+                        });
+                        $(".err-area").html(err);    
+                        return false;
+                    }
                 
-               });
+                });
             }
         
     </script>

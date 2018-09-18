@@ -61,7 +61,7 @@ rota_pessoa.get(function(req,res,next){
                 return next("Mysql error, check your query");
             }
 
-            res.render('user',{data:rows});
+            res.render('pessoa',{data:rows});
 
         });
 
