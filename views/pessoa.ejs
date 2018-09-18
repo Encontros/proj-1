@@ -40,7 +40,7 @@
                     document.getElementById("<%="mystr" + i%>").href = "pessoa/<%=data[i].id_pessoa%>"
                 </script>
                 <td>        
-                    <a class="a-inside delete" href="javascript:void(0)" onClick="deletePessoa(<%=data[i].id_pessoa%>)">Delete</a>     
+                    <a class="a-inside delete" href="javascript:void(0)" onClick="deletePessoa(<%=data[i].id_pessoa%>)">Deletar</a>     
                 </td>
             </tr>
         <% }
@@ -69,7 +69,7 @@
             <tr>
                 <td class="label"></td>
                 <td>
-                    &nbsp; <input type="button" value="Save" onClick="savePessoa()">
+                    &nbsp; <input type="button" value="Savar" onClick="savePessoa()">
                 </td>
             </tr>
             </table>
