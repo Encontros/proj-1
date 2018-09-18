@@ -38,7 +38,7 @@
 
             <td><a href="" id="<%="mystr" + i%>"><%=data[i].nome_genero%></a></td>
             <script>
-                document.getElementById("<%="mystr" + i%>").href = "<%=data[i].id_genero%>"
+                document.getElementById("<%="mystr" + i%>").href = "genero/<%=data[i].id_genero%>"
                 // document.getElementById("<%="mystr" + i%>").href = RemoveAccents("<%=data[i].nome_genero%>");
             </script>
         </tr>

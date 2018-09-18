@@ -11,8 +11,8 @@ app.set('views','./views');
 app.set('view engine','ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: true })); //support x-www-form-urlencoded
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); //support x-www-form-urlencoded
 app.use(expressValidator());
 
 /*MySql connection*/
@@ -51,7 +51,7 @@ var rota_pessoa = router.route('/pessoa');
 var rota_filme = router.route('/filme');
 var rota_genero = router.route('/genero');
 var rota_filmes_genero = router.route('/genero/:id_genero');
-var rota_encontro = router.route('/encontro')
+var rota_encontro = router.route('/encontro');
 var rota_participantes = router.route('/encontro/:id_encontro');
 
 //R do CRUD  | GET
@@ -62,7 +62,7 @@ rota_pessoa.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM Pessoa',function(err,rows){
+        var query = conn.query('SELECT * FROM Pessoa WHERE validade_pessoa=1',function(err,rows){
 
             if(err){
                 console.log(err);
@@ -121,7 +121,7 @@ rota_filme.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM Filme, Genero WHERE Filme.id_genero = Genero.id_genero; SELECT * FROM Genero',function(err,rows){
+        var query = conn.query('SELECT * FROM Filme, Genero WHERE Filme.id_genero = Genero.id_genero AND validade_filme = 1 AND validade_genero = 1; SELECT * FROM Genero WHERE validade_genero = 1',function(err,rows){
 
             if(err){
                 console.log(err);
@@ -144,7 +144,7 @@ rota_encontro.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM Encontro, Filme, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Filme.id_filme = Encontro.id_filme AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND Pessoa.id_pessoa = Encontro.id_anfitriao ORDER BY data_encontro; SELECT nome_filme FROM Filme; SELECT nome FROM Pessoa;',function(err,rows){
+        var query = conn.query('SELECT * FROM Encontro, Filme, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Filme.id_filme = Encontro.id_filme AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND Pessoa.id_pessoa = Encontro.id_anfitriao AND validade_pessoa = 1 AND validade_encontro = 1 AND validade_filme=1 AND validade_pessoaencontro=1 ORDER BY data_encontro; SELECT nome_filme FROM Filme WHERE validade_filme =1; SELECT nome FROM Pessoa WHERE validade_pessoa;',function(err,rows){
 
             if(err){
                 console.log(err);
@@ -173,7 +173,31 @@ rota_filme.post(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("INSERT INTO Filme (nome_filme, duracao, id_genero) VALUES (?,?,(SELECT id_genero FROM Genero WHERE nome_genero = ?))",[req.body.titulo,req.body.duracao, req.body.genero], function(err, rows){
+        var query = conn.query("INSERT INTO Filme (nome_filme, duracao, id_genero) VALUES (?,?,(SELECT id_genero FROM Genero WHERE nome_genero = ? AND validade_genero=1))",[req.body.titulo,req.body.duracao, req.body.genero], function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
+rota_participantes.post(function(req,res,next){
+
+    var id_encontro = req.query.id_encontro;
+
+    //insere no mysql
+    req.getConnection(function (err, conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("INSERT INTO PessoaEncontro (id_pessoa, id_encontro) VALUES ((SELECT id_pessoa FROM Pessoa WHERE nome = ? and validade_pessoa=1),?)",[req.body.particip,id_encontro], function(err, rows){
 
             if(err){
                 console.log(err);
@@ -201,7 +225,7 @@ rota_encontro.post(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("INSERT INTO Encontro (data_encontro, id_anfitriao, id_filme) VALUES (?,(SELECT id_pessoa FROM Pessoa WHERE nome = ?),(SELECT id_filme FROM Filme WHERE nome_filme = ?));INSERT INTO PessoaEncontro (id_pessoa, id_encontro) VALUES ((SELECT id_pessoa FROM Pessoa WHERE nome = ?),(SELECT max(id_encontro) FROM Encontro))",[req.body.data_encontro,req.body.anfitriao, req.body.filme, req.body.anfitriao], function(err, rows){
+        var query = conn.query("INSERT INTO Encontro (data_encontro, id_anfitriao, id_filme) VALUES (?,(SELECT id_pessoa FROM Pessoa WHERE nome = ? AND validade_pessoa=1),(SELECT id_filme FROM Filme WHERE nome_filme = ? AND validade_filme=1));INSERT INTO PessoaEncontro (id_pessoa, id_encontro) VALUES ((SELECT id_pessoa FROM Pessoa WHERE nome = ? AND validade_pessoa=1),(SELECT max(id_encontro) FROM Encontro WHERE validade_encontro=1))",[req.body.data_encontro,req.body.anfitriao, req.body.filme, req.body.anfitriao], function(err, rows){
 
             if(err){
                 console.log(err);
@@ -215,14 +239,13 @@ rota_encontro.post(function(req,res,next){
     });
 
 });
-
 rota_genero.get(function(req,res,next){
 
     req.getConnection(function(err,conn){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT nome_genero, id_genero FROM Genero',function(err,rows){
+        var query = conn.query('SELECT nome_genero, id_genero FROM Genero WHERE validade_genero=1',function(err,rows){
 
             if(err){
                 console.log(err);
@@ -243,7 +266,7 @@ rota_filmes_genero.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM Filme, Genero WHERE Filme.id_genero = Genero.id_genero AND (Genero.id_genero  =  ?)',id_genero ,function(err,rows){
+        var query = conn.query('SELECT * FROM Filme, Genero WHERE Filme.id_genero = Genero.id_genero AND (Genero.id_genero  =  ?) AND validade_filme=1, AND validade_genero=1',id_genero ,function(err,rows){
 
             if(err){
                 console.log(err);
@@ -264,7 +287,7 @@ rota_participantes.get(function(req,res,next){
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query('SELECT * FROM Encontro, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND (Encontro.id_encontro = ?); SELECT nome FROM Pessoa;',id_encontro ,function(err,rows){
+        var query = conn.query('SELECT nome FROM Pessoa WHERE validade_pessoa=1;SELECT * FROM Encontro, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND (Encontro.id_encontro = ?)AND validade_encontro=1 AND validade_pessoaencontro=1 AND validade_pessoa=1',id_encontro ,function(err,rows){
 
             if(err){
                 console.log(err);
