@@ -20,7 +20,7 @@ app.use(
     connection(mysql,{
         host     : 'localhost',
         user     : 'root',
-        password : '123456',
+        password : '',
         database : 'projeto1',
         debug    : false, 
         multipleStatements: true
