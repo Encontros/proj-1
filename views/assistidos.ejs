@@ -10,17 +10,17 @@
 
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">   
-        <h2>Participantes</h2>
+        <h2>Filmes Assistidos</h2>
         
         <tr>
-            <th>Lista de Presença</th>
+            <th>Título</th>
         </tr>
             <% if(data[1].length){ 
                         
                 for(var i = 0;i < data[1].length;i++) { %>
             
                         <tr>
-                            <td><%=data[1][i].nome%></td>
+                            <td><%=data[1][i].nome_filme%></td>
                         </tr>  
 
                     <% }
@@ -38,10 +38,10 @@
         <form method="post" action="" id="the-form">
             <table cellpadding="11">
             <tr>
-                <td class="label">Adicionar participante</td><td>: 
-                    <select id="select1" name="particip">
+                <td class="label">Viu mais um filme? Adicione aqui</td><td>: 
+                    <select id="select1" name="filmes">
                         <% for(var i=0; i < data[0].length; i++) { %>
-                            <option><%= data[0][i].nome%></option>
+                            <option><%= data[0][i].nome_filme%></option>
                          <% } %>
                     </select></td>
     
@@ -49,7 +49,7 @@
              <tr>
                 <td class="label"></td>
                 <td>
-                    &nbsp; <input type="button" value="Save" onClick="savePart(<%=data[1][0].id_encontro%>)">
+                    &nbsp; <input type="button" value="Save" onClick="saveAssistido(<%=data[1][0].id_pessoa%>)">
                 </td>
              </tr>
             </table>
@@ -58,11 +58,11 @@
 
     <script>
 
-            function savePart(id_encontro){
+            function saveAssistido(id_pessoa){
                
                $.ajax({
     
-                url:"/api/encontro/"+id_encontro,
+                url:"/api/pessoa/"+id_pessoa,
                 type:"put",
                 data:$("#the-form").serialize(),
                 success:function(res){
@@ -85,7 +85,7 @@
                });
             }
         
-        </script>
+    </script>
 
 </body>
 </html>

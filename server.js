@@ -48,6 +48,7 @@ router.use(function(req, res, next) {
 });
 
 var rota_pessoa = router.route('/pessoa');
+var rota_pessoa_filme = router.route('/pessoa/:id_pessoa')
 var rota_filme = router.route('/filme');
 var rota_genero = router.route('/genero');
 var rota_filmes_genero = router.route('/genero/:id_genero');
@@ -188,16 +189,15 @@ rota_filme.post(function(req,res,next){
 
 });
 
-rota_participantes.post(function(req,res,next){
+rota_participantes.put(function(req,res,next){
 
-    var id_encontro = req.query.id_encontro;
+    var id_encontro = req.params.id_encontro;
 
-    //insere no mysql
-    req.getConnection(function (err, conn){
+    req.getConnection(function (err, conn) {
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("INSERT INTO PessoaEncontro (id_pessoa, id_encontro) VALUES ((SELECT id_pessoa FROM Pessoa WHERE nome = ? and validade_pessoa=1),?)",[req.body.particip,id_encontro], function(err, rows){
+        var query = conn.query("INSERT INTO PessoaEncontro (id_pessoa, id_encontro) VALUES ((SELECT id_pessoa FROM Pessoa WHERE nome = ? and validade_pessoa=1),?)",[req.body.particip, id_encontro], function(err, rows){
 
             if(err){
                 console.log(err);
@@ -205,6 +205,50 @@ rota_participantes.post(function(req,res,next){
             }
 
             res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
+rota_pessoa_filme.put(function(req,res,next){
+
+    var id_pessoa = req.params.id_pessoa;
+
+    req.getConnection(function (err, conn) {
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("INSERT INTO PessoaFilme (id_filme, id_pessoa) VALUES ((SELECT id_filme FROM Filme WHERE nome_filme = ? and validade_filme=1),?)",[req.body.filmes, id_pessoa], function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
+rota_pessoa_filme.get(function(req,res,next){
+    var id_pessoa = req.params.id_pessoa;
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query('SELECT nome_filme FROM Filme WHERE validade_filme=1;SELECT * FROM Filme, Pessoa, PessoaFilme WHERE Filme.id_filme = PessoaFilme.id_filme AND Pessoa.id_pessoa = PessoaFilme.id_pessoa AND validade_filme=1 AND validade_pessoafilme=1 AND validade_pessoa=1 AND Pessoa.id_pessoa = ?',id_pessoa ,function(err,rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.render('assistidos',{title:"RESTful Crud Example",data:rows});
 
         });
 
