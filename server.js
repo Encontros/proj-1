@@ -69,6 +69,39 @@ rota_pessoa.get(function(req,res,next){
 
 });
 
+rota_pessoa.post(function(req,res,next){
+
+    var errors = req.validationErrors();
+    if(errors){
+        res.status(422).json(errors);
+        return;
+    }
+
+    var data = {
+        nome:req.body.nome,
+        telefone:req.body.telefone,
+        endereco:req.body.endereco,
+    };
+
+    req.getConnection(function (err, conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("INSERT INTO Pessoa set ? ",data, function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
 rota_pessoa_id.get(function(req,res,next){
     var id_pessoa = req.params.id_pessoa;
     req.getConnection(function(err,conn){
@@ -90,6 +123,52 @@ rota_pessoa_id.get(function(req,res,next){
 
 });
 
+rota_pessoa_id.post(function(req,res,next){
+
+    var id_pessoa = req.params.id_pessoa;
+
+    req.getConnection(function (err, conn) {
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("INSERT INTO PessoaFilme (id_filme, id_pessoa) VALUES ((SELECT id_filme FROM Filme WHERE nome_filme = ? and validade_filme=1),?)",[req.body.filmes, id_pessoa], function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
+rota_pessoa_id.put(function(req,res,next){
+
+    var id_pessoa = req.params.id_pessoa;
+
+    req.getConnection(function (err, conn) {
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("UPDATE Pessoa SET validade_pessoa = 0 WHERE id_pessoa = ?",[id_pessoa], function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
+
+        });
+        //console.log(query.sql);
+
+    });
+});
+
 rota_filme.get(function(req,res,next){
 
     req.getConnection(function(err,conn){
@@ -104,6 +183,33 @@ rota_filme.get(function(req,res,next){
             }
 
             res.render('filme',{data:rows});
+
+        });
+
+    });
+
+});
+
+rota_filme.post(function(req,res,next){
+
+    var errors = req.validationErrors();
+    if(errors){
+        res.status(422).json(errors);
+        return;
+    }
+
+    req.getConnection(function (err, conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query("INSERT INTO Filme (nome_filme, duracao, id_genero) VALUES (?,?,(SELECT id_genero FROM Genero WHERE nome_genero = ? AND validade_genero=1))",[req.body.titulo,req.body.duracao, req.body.genero], function(err, rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.sendStatus(200);
 
         });
 
@@ -177,112 +283,6 @@ rota_encontro.get(function(req,res,next){
 
 });
 
-rota_encontro_id.get(function(req,res,next){
-
-    var id_encontro = req.params.id_encontro;
-    
-    req.getConnection(function(err,conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query('SELECT nome FROM Pessoa WHERE validade_pessoa=1;SELECT * FROM Encontro, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND (Encontro.id_encontro = ?)AND validade_encontro=1 AND validade_pessoaencontro=1 AND validade_pessoa=1',id_encontro ,function(err,rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            res.render('participantes',{data:rows});
-
-        });
-
-    });
-
-});
-
-rota_pessoa.post(function(req,res,next){
-
-    var errors = req.validationErrors();
-    if(errors){
-        res.status(422).json(errors);
-        return;
-    }
-
-    var data = {
-        nome:req.body.nome,
-        telefone:req.body.telefone,
-        endereco:req.body.endereco,
-    };
-
-    req.getConnection(function (err, conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("INSERT INTO Pessoa set ? ",data, function(err, rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            res.sendStatus(200);
-
-        });
-
-    });
-
-});
-
-rota_pessoa_id.post(function(req,res,next){
-
-    var id_pessoa = req.params.id_pessoa;
-
-    req.getConnection(function (err, conn) {
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("INSERT INTO PessoaFilme (id_filme, id_pessoa) VALUES ((SELECT id_filme FROM Filme WHERE nome_filme = ? and validade_filme=1),?)",[req.body.filmes, id_pessoa], function(err, rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            res.sendStatus(200);
-
-        });
-
-    });
-
-});
-
-rota_filme.post(function(req,res,next){
-
-    var errors = req.validationErrors();
-    if(errors){
-        res.status(422).json(errors);
-        return;
-    }
-
-    req.getConnection(function (err, conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("INSERT INTO Filme (nome_filme, duracao, id_genero) VALUES (?,?,(SELECT id_genero FROM Genero WHERE nome_genero = ? AND validade_genero=1))",[req.body.titulo,req.body.duracao, req.body.genero], function(err, rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            res.sendStatus(200);
-
-        });
-
-    });
-
-});
-
 rota_encontro.post(function(req,res,next){
 
     var errors = req.validationErrors();
@@ -303,6 +303,29 @@ rota_encontro.post(function(req,res,next){
             }
 
             res.sendStatus(200);
+
+        });
+
+    });
+
+});
+
+rota_encontro_id.get(function(req,res,next){
+
+    var id_encontro = req.params.id_encontro;
+    
+    req.getConnection(function(err,conn){
+
+        if (err) return next("Cannot Connect");
+
+        var query = conn.query('SELECT nome FROM Pessoa WHERE validade_pessoa=1;SELECT * FROM Encontro, Pessoa, PessoaEncontro WHERE Encontro.id_encontro = PessoaEncontro.id_encontro AND Pessoa.id_pessoa = PessoaEncontro.id_pessoa AND (Encontro.id_encontro = ?)AND validade_encontro=1 AND validade_pessoaencontro=1 AND validade_pessoa=1',id_encontro ,function(err,rows){
+
+            if(err){
+                console.log(err);
+                return next("Mysql error, check your query");
+            }
+
+            res.render('participantes',{data:rows});
 
         });
 
@@ -333,15 +356,15 @@ rota_encontro_id.post(function(req,res,next){
 
 });
 
-rota_pessoa_id.put(function(req,res,next){
+rota_encontro_id.put(function(req,res,next){
 
-    var id_pessoa = req.params.id_pessoa;
+    var id_encontro = req.params.id_encontro;
 
     req.getConnection(function (err, conn) {
 
         if (err) return next("Cannot Connect");
 
-        var query = conn.query("UPDATE Pessoa SET validade_pessoa = 0 WHERE id_pessoa = ?",[id_pessoa], function(err, rows){
+        var query = conn.query("UPDATE Encontro SET validade_encontro = 0 WHERE id_encontro = ?",[id_encontro], function(err, rows){
 
             if(err){
                 console.log(err);
@@ -351,10 +374,11 @@ rota_pessoa_id.put(function(req,res,next){
             res.sendStatus(200);
 
         });
-        //console.log(query.sql);
 
     });
+
 });
+
 
 rota_filme_id.put(function(req,res,next){
 
@@ -365,29 +389,6 @@ rota_filme_id.put(function(req,res,next){
         if (err) return next("Cannot Connect");
 
         var query = conn.query("UPDATE Filme SET validade_filme = 0 WHERE id_filme = ?",[id_filme], function(err, rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
-
-            res.sendStatus(200);
-
-        });
-
-    });
-
-});
-
-rota_encontro_id.put(function(req,res,next){
-
-    var id_encontro = req.params.id_encontro;
-
-    req.getConnection(function (err, conn) {
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("UPDATE Encontro SET validade_encontro = 0 WHERE id_encontro = ?",[id_encontro], function(err, rows){
 
             if(err){
                 console.log(err);
