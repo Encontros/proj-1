@@ -10,13 +10,12 @@
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
-            <!-- <th width="50px">No</th> -->
             <th>Data</th>
             <th>Anfitrião</th>
             <th>Filme</th>
             <th>Endereço</th>
             <th>Participantes</th>
-            <th>Action</th>
+            <th>Deletar</th>
 
         </tr>
 
@@ -27,7 +26,6 @@
             if(data[0][i].validade_encontro) {
         %>
         <tr>
-            <!-- <td><%=(i+1)%></td> -->
             <td><%=data[0][i].data_encontro%></td>
             <td><%=data[0][i].nome%></td>
             <td><%=data[0][i].nome_filme%></td>

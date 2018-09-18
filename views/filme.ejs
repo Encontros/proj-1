@@ -10,11 +10,10 @@
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
-            <!-- <th width="50px">No</th> -->
             <th>Título</th>
-            <th>Duração</th>
+            <th>Duração (min)</th>
             <th>Gênero</th>
-            <th>Action</th>
+            <th>Deletar</th>
 
         </tr>
                        
@@ -26,15 +25,11 @@
         %>
          
         <tr>
-            <!-- <td><%=(i+1)%></td> -->
             <td><%=data[0][i].nome_filme%></td>
             <td><%=data[0][i].duracao%></td>
             <td><%=data[0][i].nome_genero%></td>
             <td>
-
-               
                 <a class="a-inside delete" href="javascript:void(0)" onClick="deleteFilme(<%=data[0][i].id_filme%>)">Delete</a>
-               
             </td>
         </tr>
     <% }}

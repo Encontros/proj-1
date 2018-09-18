@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nosso primeiro CRUD em Node</title>
+        <title>Amigos</title>
         <script type="text/javascript" src="/../js/jquery-1.10.2.min.js"></script>
         <link rel="stylesheet" href="/../css/style.css">
     </head>
@@ -10,12 +10,11 @@
 <div class="data-table">
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
-            <!-- <th width="50px">No</th> -->
             <th>Nome</th>
             <th>Telefone</th>
             <th>Endereco</th>
             <th>Filmes que já assistiu</th>
-            <th>Action</th>
+            <th>Deletar</th>
 
         </tr>
                        
@@ -24,7 +23,6 @@
          for(var i = 0;i < data.length;i++) { %>
          
         <tr>
-            <!-- <td><%=(i+1)%></td> -->
             <td><%=data[i].nome%></td>
             <td><%=data[i].telefone%></td>
             <td><%=data[i].endereco%></td>
@@ -32,11 +30,8 @@
             <script>
                 document.getElementById("<%="mystr" + i%>").href = "pessoa/<%=data[i].id_pessoa%>"
             </script>
-            <td>
-                <!-- <a class="a-inside edit" href="/api/user/<%=data[i].id_pessoa%>">Edit</a> -->
-               
-                <a class="a-inside delete" href="javascript:void(0)" onClick="deleteUser(<%=data[i].id_pessoa%>)">Delete</a>
-               
+            <td>        
+                <a class="a-inside delete" href="javascript:void(0)" onClick="deleteUser(<%=data[i].id_pessoa%>)">Delete</a>     
             </td>
         </tr>
     <% }
@@ -108,7 +103,7 @@
     
         $.ajax({
             url:"/api/pessoa/"+id_pessoa,
-            type: 'DELETE',
+            type: 'put',
             success: function(res) {
                 
                 window.location.reload();
