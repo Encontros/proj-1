@@ -1,4 +1,4 @@
-﻿## Encontros & Filmes
+﻿## Encontros & Filmes (tag: v1.0)
 Por: Elisa Malzoni e Vitória Camilo
 
 Um sistema onde amigos podem marcar encontros para assistir seus filmes preferidos na casa de um deles, cadastrando pessoas, filmes e encontros, buscando filmes por gênero e marcando os que já assistiu, e conferindo informações sobre novos encontros como a data, a hora, o anfitrião e o endereço.
