@@ -94,7 +94,7 @@ rota_pessoa.post(function(req,res,next){
                 return next("Mysql error, check your query");
             }
 
-            res.sendStatus(200);
+            res.sendStatus(201);
 
         });
 
