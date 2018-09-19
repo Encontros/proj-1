@@ -5,7 +5,7 @@ Um sistema onde amigos podem marcar encontros para assistir seus filmes preferid
 
 ### Guia de Instalação
 
-- Instale em seu computador o [Node.js](https://nodejs.org/en/download/ "Node.js"), o [MySQL](https://dev.mysql.com/downloads/installer/ "MySQL")`;
+- Instale em seu computador o [Node.js](https://nodejs.org/en/download/ "Node.js"), o [MySQL](https://dev.mysql.com/downloads/installer/ "MySQL");
 - Clone este repositório no seu computador e acesse seu primeiro diretório [/proj-1](https://github.com/Encontros/proj-1) através do prompt de comando;
 - Instale dentro deste diretório os seguintes módulos do Node.js: express, express-validator, body-parser, mysql, express-myconnection e path, através do comando: `npm install nome_do_modulo --save`;
 - Abra a pasta [/scripts](https://github.com/Encontros/proj-1/tree/master/scripts) e execute com o MySQL os arquivos [criaTabelas](https://github.com/Encontros/proj-1/blob/master/scripts/criaTabelas.sql), [insereDados](https://github.com/Encontros/proj-1/blob/master/scripts/insereDados.sql), [criaUsuario](https://github.com/Encontros/proj-1/blob/master/scripts/criaUsuario.sql) nesta ordem (lembre-se de instalar e configurar o MySQL antes disso, você pode entender melhor como fazer seu primeiro acesso [neste link](https://dev.mysql.com/doc/refman/8.0/en/windows-server-first-start.html));
