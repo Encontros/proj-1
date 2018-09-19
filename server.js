@@ -19,8 +19,8 @@ var connection  = require('express-myconnection'),
 app.use(
     connection(mysql,{
         host     : 'localhost',
-        user     : 'root',
-        password : '',
+        user     : 'usuario',
+        password : 'megadados',
         database : 'projeto1',
         debug    : false, 
         multipleStatements: true
