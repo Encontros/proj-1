@@ -1,63 +1,63 @@
 ## Encontros & Filmes
-Por: Elisa Malzoni e Vitória Camilo
+Por: Elisa Malzoni e VitÃ³ria Camilo
 
-Um sistema onde amigos podem marcar encontros para assistir seus filmes preferidos na casa de um deles, cadastrando pessoas, filmes e encontros, buscando filmes por gênero e marcando os que já assistiu, e conferindo informações sobre novos encontros como a data, a hora, o anfitrião e o endereço.
+Um sistema onde amigos podem marcar encontros para assistir seus filmes preferidos na casa de um deles, cadastrando pessoas, filmes e encontros, buscando filmes por gÃªnero e marcando os que jÃ¡ assistiu, e conferindo informaÃ§Ãµes sobre novos encontros como a data, a hora, o anfitriÃ£o e o endereÃ§o.
 
-### Guia de Instalação
+### Guia de InstalaÃ§Ã£o
 
 - Instale em seu computador o [Node.js](https://nodejs.org/en/download/ "Node.js"), o [MySQL](https://dev.mysql.com/downloads/installer/ "MySQL")`;
-- Clone este repositório no seu computador e acesse seu primeiro diretório através do prompt de comando;
-- Instale dentro deste diretório os seguintes módulos do Node.js: express, express-validator, body-parser, mysql, express-myconnection e path, através do comando: `npm install nome_do_modulo --save`;
+- Clone este repositÃ³rio no seu computador e acesse seu primeiro diretÃ³rio (/proj-1) atravÃ©s do prompt de comando;
+- Instale dentro deste diretÃ³rio os seguintes mÃ³dulos do Node.js: express, express-validator, body-parser, mysql, express-myconnection e path, atravÃ©s do comando: `npm install nome_do_modulo --save`;
 - Execute `node server.js` para rodar o programa;
 
 
-### Manual do Usuário
+### Manual do UsuÃ¡rio
 
-- Acesse http://localhost:3000 para começar a utilizar o programa;
+- Acesse http://localhost:3000 para comeÃ§ar a utilizar o programa;
 
-- Na página inicial você pode escolher ver as informações sobre as pessoas, os filmes, os gêneros de filme e os encontros marcados;
+- Na pÃ¡gina inicial vocÃª pode escolher ver as informaÃ§Ãµes sobre as pessoas, os filmes, os gÃªneros de filme e os encontros marcados;
 
 #### Pessoas
 
-- A tabela exibe o nome, o telefone e o endereço de cada pessoa que está cadastrada, e o formulário a direita permite adicionar mais alguém inserindo essas mesmas informações de nome, telefone e endereço, e clicando em Salvar;
+- A tabela exibe o nome, o telefone e o endereÃ§o de cada pessoa que estÃ¡ cadastrada, e o formulÃ¡rio a direita permite adicionar mais alguÃ©m inserindo essas mesmas informaÃ§Ãµes de nome, telefone e endereÃ§o, e clicando em Salvar;
 
-- Clicando no link da coluna Deletar referente a pessoa escolhida, é possível excluí-la do site;
+- Clicando no link da coluna Deletar referente a pessoa escolhida, Ã© possÃ­vel excluÃ­-la do site;
 
-- Em Filmes que já assistiu você pode acessar a lista de todos os filmes que estão cadastrados e a pessoa escolhida já viu;
+- Em Filmes que jÃ¡ assistiu vocÃª pode acessar a lista de todos os filmes que estÃ£o cadastrados e a pessoa escolhida jÃ¡ viu;
 
 ##### Filmes Assistidos
 
-- Nesta página é possível visualizar à esquerda uma lista com os todos os filmes que estão cadastrados e a pessoa escolhida já assistiu;
+- Nesta pÃ¡gina Ã© possÃ­vel visualizar Ã  esquerda uma lista com os todos os filmes que estÃ£o cadastrados e a pessoa escolhida jÃ¡ assistiu;
 
-- À direita, clicando no dropdown, é possível selecionar um novo filme para ser adicionado à lista de assistidos daquela pessoa, escolhendo ele da lista e clicando em Salvar;
+- Ã€ direita, clicando no dropdown, Ã© possÃ­vel selecionar um novo filme para ser adicionado Ã  lista de assistidos daquela pessoa, escolhendo ele da lista e clicando em Salvar;
 
 #### Filmes
 
-- A tabela exibe o título, a duração em minutos e o gênero de cada filme, e o formulário a direita permite adicionar um filme novo inserindo essas mesmas informações de título, duração em minutos e gênero, e clicando em Salvar;
+- A tabela exibe o tÃ­tulo, a duraÃ§Ã£o em minutos e o gÃªnero de cada filme, e o formulÃ¡rio a direita permite adicionar um filme novo inserindo essas mesmas informaÃ§Ãµes de tÃ­tulo, duraÃ§Ã£o em minutos e gÃªnero, e clicando em Salvar;
 
-- Clicando no link da coluna Deletar referente ao filme escolhido, é possível excluí-lo do site;
+- Clicando no link da coluna Deletar referente ao filme escolhido, Ã© possÃ­vel excluÃ­-lo do site;
 
-#### Gêneros
+#### GÃªneros
 
-- A página exibe uma lista com todos os gêneros de filme disponíveis no site, e clicando em um deles é possível visualizar uma lista com todos os filmes daquele gênero que estão cadastrados;
+- A pÃ¡gina exibe uma lista com todos os gÃªneros de filme disponÃ­veis no site, e clicando em um deles Ã© possÃ­vel visualizar uma lista com todos os filmes daquele gÃªnero que estÃ£o cadastrados;
 
-##### Filmes por Gênero
+##### Filmes por GÃªnero
 
-- A tabela exibe uma lista com os títulos de todos filmes que estão cadastrados no site e que pertencem ao gênero que foi escolhido, e conta também com suas informações de duração em minutos;
+- A tabela exibe uma lista com os tÃ­tulos de todos filmes que estÃ£o cadastrados no site e que pertencem ao gÃªnero que foi escolhido, e conta tambÃ©m com suas informaÃ§Ãµes de duraÃ§Ã£o em minutos;
 
 #### Encontros
 
-- Na tabela encontram-se as informações de data e hora, anfitrião, filme e endereço referentes a cada encontro que já foi marcado, e organizadas por ordem de data;
+- Na tabela encontram-se as informaÃ§Ãµes de data e hora, anfitriÃ£o, filme e endereÃ§o referentes a cada encontro que jÃ¡ foi marcado, e organizadas por ordem de data;
 
-- No formulário é possivel marcar um novo encontro inserindo as informações de data e hora, anfitrião e filme, e clicando em Salvar;
+- No formulÃ¡rio Ã© possivel marcar um novo encontro inserindo as informaÃ§Ãµes de data e hora, anfitriÃ£o e filme, e clicando em Salvar;
 
-- Clicando no link da coluna Deletar referente ao encontro escolhido, é possível excluí-lo do site;
+- Clicando no link da coluna Deletar referente ao encontro escolhido, Ã© possÃ­vel excluÃ­-lo do site;
 
-- Os links da coluna Participantes redirecionam a uma página em que é possível ver e adicionar as pessoas que participaram ou irão participar de um encontro;
+- Os links da coluna Participantes redirecionam a uma pÃ¡gina em que Ã© possÃ­vel ver e adicionar as pessoas que participaram ou irÃ£o participar de um encontro;
 
 ##### Participantes
 
-- Nesta página é possível visualizar à esquerda uma lista com os todos os participantes confirmados no evento, incluindo o anfitrião;
+- Nesta pÃ¡gina Ã© possÃ­vel visualizar Ã  esquerda uma lista com os todos os participantes confirmados no evento, incluindo o anfitriÃ£o;
 
-- À direita, clicando no dropdown, é possível selecionar um novo participante e adicioná-lo a lista daquele encontro clicando em Salvar;
+- Ã€ direita, clicando no dropdown, Ã© possÃ­vel selecionar um novo participante e adicionÃ¡-lo a lista daquele encontro clicando em Salvar;
 
